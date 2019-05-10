@@ -24,6 +24,23 @@ const apiTests = [
       type: 'book',
       ISBN: '9780099560432'
     }]
+  },
+  {
+    name: 'book',
+    input: 9780008117498,
+    output: [{
+      URL: 'https://openlibrary.org/books/OL26774598M/FOUNDATION-_PB',
+      author: [{
+        family: 'Asimov',
+        given: 'Isaac',
+        _url: 'https://openlibrary.org/authors/OL34221A/Isaac_Asimov'
+      }],
+      issued: { raw: 'Sep 22, 2016' },
+      publisher: 'HARPER COLLINS',
+      title: 'FOUNDATION- PB',
+      type: 'book',
+      ISBN: '9780008117498'
+    }]
   }
 ]
 
