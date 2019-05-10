@@ -3,20 +3,32 @@ import { util } from '@citation-js/core'
 import * as google from './google-books.js'
 import * as ol from './open-library.js'
 
-async function getResponse (isbn) {
-  const googleUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
-  const olUrl = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+function getUrls (isbn) {
+  return [
+    [`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
+      json => json.totalItems],
+    [`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
+      json => Object.keys(json).length]
+  ]
+}
 
-  let json = JSON.parse(await util.fetchFileAsync(googleUrl))
-
-  if (json.totalItems !== 0) {
-    return json
+function getResponse (isbn) {
+  for (let [url, check] of getUrls(isbn)) {
+    let json = JSON.parse(util.fetchFile(url))
+    if (check(json)) {
+      return json
+    }
   }
 
-  json = JSON.parse(await util.fetchFileAsync(olUrl))
+  throw new Error(`Cannot find resource for ISBN: ${isbn}`)
+}
 
-  if (Object.keys(json).length !== 0) {
-    return json
+async function getResponseAsync (isbn) {
+  for (let [url, check] of getUrls(isbn)) {
+    let json = JSON.parse(await util.fetchFileAsync(url))
+    if (check(json)) {
+      return json
+    }
   }
 
   throw new Error(`Cannot find resource for ISBN: ${isbn}`)
@@ -26,7 +38,8 @@ export const ref = '@isbn'
 export const formats = {
   // fetch from API
   '@isbn/isbn-10': {
-    parseAsync: getResponse,
+    parse: getResponse,
+    parseAsync: getResponseAsync,
     parseType: {
       dataType: 'String',
       predicate: /^\d{10}$/
@@ -34,7 +47,8 @@ export const formats = {
   },
 
   '@isbn/isbn-13': {
-    parseAsync: getResponse,
+    parse: getResponse,
+    parseAsync: getResponseAsync,
     parseType: {
       dataType: 'String',
       predicate: /^(978|979)\d{10}$/
