@@ -18,8 +18,8 @@ Formats and other features added by this plugin.
 
 ### ISBN identifiers
 
-  * ISBN-10
-  * ISBN-13
-  * ISBN-A (actionable ISBN)
+  * ISBN-10 (`@isbn/isbn-10`)
+  * ISBN-13 (`@isbn/isbn-13`)
+  * ISBN-A (actionable ISBN, `@isbn/isbn-a`)
 
 ### Google Books API response
