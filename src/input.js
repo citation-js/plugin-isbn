@@ -4,6 +4,8 @@ import * as google from './google-books.js'
 import * as ol from './open-library.js'
 
 function getUrls (isbn) {
+  isbn = isbn.replace(/-/g, '')
+
   return [
     [`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
       json => json.totalItems],
@@ -42,7 +44,9 @@ export const formats = {
     parseAsync: getResponseAsync,
     parseType: {
       dataType: 'String',
-      predicate: /^\d{10}$/
+      predicate (id) {
+        return /^\d{10}$/.test(id.replace(/-/g, ''))
+      }
     }
   },
 
@@ -51,7 +55,9 @@ export const formats = {
     parseAsync: getResponseAsync,
     parseType: {
       dataType: 'String',
-      predicate: /^(978|979)\d{10}$/
+      predicate (id) {
+        return /^(978|979)\d{10}$/.test(id.replace(/-/g, ''))
+      }
     }
   },
 

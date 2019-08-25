@@ -26,7 +26,7 @@ const apiTests = [
     }]
   },
   {
-    name: 'book',
+    name: 'as number',
     input: 9780008117498,
     output: [{
       URL: 'https://openlibrary.org/books/OL26774598M/FOUNDATION-_PB',
@@ -40,6 +40,24 @@ const apiTests = [
       title: 'FOUNDATION- PB',
       type: 'book',
       ISBN: '9780008117498'
+    }]
+  },
+  {
+    name: 'with hyphens',
+    input: '978-0918024565',
+    output: [{
+      type: 'book',
+      author: [{
+        given: 'Muriel',
+        family: 'Rukeyser'
+      }],
+      URL: 'https://books.google.com/books/about/Willard_Gibbs.html?hl=&id=Bq9jQgAACAAJ',
+      keyword: 'Science',
+      ISBN: '9780918024565',
+      language: 'en',
+      'number-of-pages': 465,
+      title: 'Willard Gibbs',
+      issued: { 'date-parts': [[1988]] }
     }]
   }
 ]
