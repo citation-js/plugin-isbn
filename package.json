@@ -1,6 +1,6 @@
 {
   "name": "@citation-js/plugin-isbn",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Citation.js plugin to fetch ISBN metadata",
   "main": "lib/index.js",
   "scripts": {
