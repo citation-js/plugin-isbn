@@ -67,7 +67,7 @@ const OL_PROPS = [
     source: ['subjects', 'subject_places', 'subject_people', 'subject_times'],
     target: 'keyword',
     convert: {
-      toTarget: (...subjects) => [].concat(...subjects).map(({ name }) => name).join(),
+      toTarget: (...subjects) => [].concat(...subjects).filter(Boolean).map(({ name }) => name).join(),
       toSource: keywords => [keywords.split(',').map(name => ({
         name,
         url: 'https://openlibrary.org/subjects/' + name.toLowerCase().replace(/\W+/g, '_')
