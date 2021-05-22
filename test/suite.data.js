@@ -10,7 +10,8 @@ module.exports = [
       ],
       issued: { 'date-parts': [[2012]] },
       keyword: 'Fiction',
-      language: 'en',
+      // Currently missing (2021-05-22): https://twitter.com/larswillighagen/status/1395899101691142144
+      // language: 'en',
       'number-of-pages': 374,
       publisher: 'Random House',
       title: 'Ready Player One',
@@ -32,7 +33,8 @@ module.exports = [
         'date-parts': [[2016, 9, 19]]
       },
       keyword: 'Archives',
-      language: 'en',
+      // Currently missing (2021-05-22): https://twitter.com/larswillighagen/status/1395899101691142144
+      // language: 'en',
       'number-of-pages': 240,
       publisher: 'Voyager',
       title: 'Foundation',
@@ -52,7 +54,8 @@ module.exports = [
       URL: 'https://books.google.com/books/about/Willard_Gibbs.html?hl=&id=Bq9jQgAACAAJ',
       keyword: 'Science',
       ISBN: '9780918024565',
-      language: 'en',
+      // Currently missing (2021-05-22): https://twitter.com/larswillighagen/status/1395899101691142144
+      // language: 'en',
       'number-of-pages': 465,
       title: 'Willard Gibbs',
       issued: { 'date-parts': [[1988]] }
