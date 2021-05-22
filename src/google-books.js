@@ -1,6 +1,6 @@
+import { util } from '@citation-js/core'
 import * as name from '@citation-js/name'
 import * as date from '@citation-js/date'
-import { Translator } from './translator'
 
 // Google Books API V1: Volume representation
 // https://developers.google.com/books/docs/v1/reference/volumes#resource
@@ -91,7 +91,7 @@ const GOOGLE_PROPS = [
   }
 ]
 
-const translator = new Translator(GOOGLE_PROPS)
+const translator = new util.Translator(GOOGLE_PROPS)
 
 export function parse (volume) {
   return translator.convertToTarget(volume.volumeInfo)

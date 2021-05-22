@@ -1,6 +1,6 @@
+import { util } from '@citation-js/core'
 import * as name from '@citation-js/name'
 import * as date from '@citation-js/date'
-import { Translator } from './translator'
 
 // Open Library Books API
 // https://openlibrary.org/dev/docs/api/books
@@ -78,7 +78,7 @@ const OL_PROPS = [
   { source: 'url', target: 'URL' }
 ]
 
-const translator = new Translator(OL_PROPS)
+const translator = new util.Translator(OL_PROPS)
 
 export function parse (response) {
   return Object.keys(response).map((id) => {
