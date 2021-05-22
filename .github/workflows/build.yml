@@ -20,6 +20,7 @@ jobs:
 
     - run: npm install
     - run: npm run coverage
+    - run: npm run report
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
