@@ -1,3 +1,20 @@
+# [0.3.0](https://github.com/citation-js/plugin-isbn/compare/v0.2.1...v0.3.0) (2021-05-22)
+
+
+* chore!: drop Node 8 support ([6dfb433](https://github.com/citation-js/plugin-isbn/commit/6dfb433ecdc0ff824495303c8b6dc480d4626d85))
+
+
+### Bug Fixes
+
+* **google:** fix undefined language handling ([84a7dca](https://github.com/citation-js/plugin-isbn/commit/84a7dcacb05b11bd43feb351fd5f9bbba6d03c4a))
+
+
+### BREAKING CHANGES
+
+* Node 8 support dropped. Upgrade to Node 10 or higher
+
+
+
 ## [0.2.1](https://github.com/citation-js/plugin-isbn/compare/v0.2.0...v0.2.1) (2019-08-25)
 
 
@@ -26,9 +43,12 @@
 
 
 
-# [0.1.0](https://github.com/citation-js/plugin-isbn/compare/2d9720b70abe505ddd71490f22d9399902f9cce6...v0.1.0) (2019-05-06)
+# [0.1.0](https://github.com/citation-js/plugin-isbn/compare/a1a38d987235c88846c29092a86426b26b4885b6...v0.1.0) (2019-05-06)
 
 
 ### Features
 
 * **google:** support Google Books API ([a1a38d9](https://github.com/citation-js/plugin-isbn/commit/a1a38d987235c88846c29092a86426b26b4885b6))
+
+
+
