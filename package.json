@@ -18,6 +18,12 @@
     "type": "git",
     "url": "git+https://github.com/citation-js/plugin-isbn.git"
   },
+  "keywords": [
+    "citation.js",
+    "ISBN",
+    "Google Books",
+    "Open Library"
+  ],
   "author": "Lars Willighagen",
   "license": "MIT",
   "bugs": {
