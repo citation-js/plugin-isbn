@@ -9,7 +9,7 @@ module.exports = {
     ]
   ],
   env: {
-    test: {
+    coverage: {
       plugins: ['istanbul']
     }
   },
