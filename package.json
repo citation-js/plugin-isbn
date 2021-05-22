@@ -7,8 +7,10 @@
     "test": "mocha -r @babel/register -R spec test/suite.js",
     "babel": "babel src -d lib --copy-files",
     "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "coverage": "nyc npm test",
     "prepublishOnly": "npm run babel",
+    "version": "npm run changelog",
     "preversion": "npm run lint && npm run test"
   },
   "repository": {
