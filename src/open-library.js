@@ -89,7 +89,7 @@ export function parse (response) {
 export function format (records) {
   const output = {}
 
-  for (let record of records) {
+  for (const record of records) {
     if (!record.ISBN) {
       output[`ISBN:${record.ISBN}`] = translator.convertToSource(record)
     }

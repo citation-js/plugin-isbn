@@ -27,7 +27,7 @@ module.exports = [
       abstract: 'The first volume in Issac Asimov\'s world-famous saga, winner of the Hugo Award for Best All-Time Novel Series. Long after Earth was forgotten, a peaceful and unified galaxy took shape, an Empire governed from the majestic city-planet of Trantor. The system worked, and grew, for countless generations. Everyone believed it would work forever. Everyone except Hari Seldon. As the great scienctific thinker of his age Seldon could not be ignored. Reluctantly, the Commission of Public Safety agreed to finance the Seldon Plan. The coming disaster was predicted by Seldon\'s advances in psychohistory, the mathematics of very large human numbers, and it could not be averted. The Empire was doomed. Soon Trantor would lie in ruins. Chaos would overtake humanity. But the Seldon Plan was a long term strategy to minimize the worst of what was to come. Two Foundations were set up at opposite ends of the galaxy. Of the Second nothing can be told. It guards the secrets of psychohisotry. FOUNDATION is the story of the First Foundation, on the remote planet of Terminus, from which those secrets were withheld.',
       author: [{
         family: 'Asimov',
-        given: 'Isaac',
+        given: 'Isaac'
       }],
       issued: {
         'date-parts': [[2016, 9, 19]]

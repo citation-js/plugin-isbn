@@ -13,7 +13,7 @@ mockModule.exports.fetchFileAsync = function ours (url, ...args) {
     .then(response => (cache[url] = response))
 }
 
-const { Cite, plugins } = require('@citation-js/core')
+const { Cite } = require('@citation-js/core')
 require('../..')
 
 require('@babel/register')

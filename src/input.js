@@ -15,8 +15,8 @@ function getUrls (isbn) {
 }
 
 function getResponse (isbn) {
-  for (let [url, check] of getUrls(isbn)) {
-    let json = JSON.parse(util.fetchFile(url))
+  for (const [url, check] of getUrls(isbn)) {
+    const json = JSON.parse(util.fetchFile(url))
     if (check(json)) {
       return json
     }
@@ -26,8 +26,8 @@ function getResponse (isbn) {
 }
 
 async function getResponseAsync (isbn) {
-  for (let [url, check] of getUrls(isbn)) {
-    let json = JSON.parse(await util.fetchFileAsync(url))
+  for (const [url, check] of getUrls(isbn)) {
+    const json = JSON.parse(await util.fetchFileAsync(url))
     if (check(json)) {
       return json
     }

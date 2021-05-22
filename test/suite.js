@@ -9,7 +9,7 @@ import apiTests from './suite.data'
 
 describe('isbn', function () {
   describe('api', function () {
-    for (let { name, input, output } of apiTests) {
+    for (const { name, input, output } of apiTests) {
       it(name, async function () {
         assert.deepStrictEqual(await plugins.input.chainAsync(input, { generateGraph: false }), output)
       })
