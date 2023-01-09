@@ -59,7 +59,7 @@
     "@citation-js/core": "^0.5.1",
     "babel-plugin-istanbul": "^6.0.0",
     "conventional-changelog-cli": "^2.1.1",
-    "mocha": "^8.4.0",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "standard": "^16.0.3"
   },
