@@ -1,5 +1,11 @@
 # [0.4.0](https://github.com/citation-js/plugin-isbn/compare/v0.3.2...v0.4.0) (2023-06-11)
 
+* chore!: chore!: drop support for Node.js v10, v12 ([7a8523f](https://github.com/citation-js/plugin-isbn/commit/7a8523fd887334b5013163a844eef6a488c005df))
+
+
+### BREAKING CHANGES
+
+* Drop support for Node.js v10, v12
 
 
 ## [0.3.2](https://github.com/citation-js/plugin-isbn/compare/v0.3.1...v0.3.2) (2023-06-11)
