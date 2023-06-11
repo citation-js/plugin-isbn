@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/citation-js/plugin-isbn/compare/v0.3.1...v0.3.2) (2023-06-11)
+
+
+### Bug Fixes
+
+* **google:** do not include empty page counts ([52603f4](https://github.com/citation-js/plugin-isbn/commit/52603f47d52247f020a87a13b9c469e2aa720085))
+
+
+
 ## [0.3.1](https://github.com/citation-js/plugin-isbn/compare/v0.3.0...v0.3.1) (2022-05-30)
 
 
@@ -5,12 +14,12 @@
 # [0.3.0](https://github.com/citation-js/plugin-isbn/compare/v0.2.1...v0.3.0) (2021-05-22)
 
 
-* chore!: drop Node 8 support ([6dfb433](https://github.com/citation-js/plugin-isbn/commit/6dfb433ecdc0ff824495303c8b6dc480d4626d85))
-
-
 ### Bug Fixes
 
 * **google:** fix undefined language handling ([84a7dca](https://github.com/citation-js/plugin-isbn/commit/84a7dcacb05b11bd43feb351fd5f9bbba6d03c4a))
+
+
+* chore!: drop Node 8 support ([6dfb433](https://github.com/citation-js/plugin-isbn/commit/6dfb433ecdc0ff824495303c8b6dc480d4626d85))
 
 
 ### BREAKING CHANGES
