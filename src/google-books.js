@@ -96,6 +96,7 @@ const translator = new util.Translator(GOOGLE_PROPS)
 export function parse (volume) {
   // See https://twitter.com/larswillighagen/status/1395899101691142144
   if (volume.volumeInfo.language === 'un') { delete volume.volumeInfo.language }
+  if (volume.volumeInfo.pageCount === 0) { delete volume.volumeInfo.pageCount }
 
   return translator.convertToTarget(volume.volumeInfo)
 }
