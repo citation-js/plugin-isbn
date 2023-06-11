@@ -56,14 +56,14 @@
     "@babel/eslint-parser": "^7.14.3",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
-    "@citation-js/core": "^0.5.1",
+    "@citation-js/core": "^0.6.8",
     "babel-plugin-istanbul": "^6.0.0",
-    "conventional-changelog-cli": "^2.1.1",
-    "mocha": "^8.4.0",
+    "conventional-changelog-cli": "^3.0.0",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "standard": "^16.0.3"
+    "standard": "^17.1.0"
   },
   "peerDependencies": {
-    "@citation-js/core": ">=0.5.1 <=0.6"
+    "@citation-js/core": ">=0.6.0"
   }
 }
