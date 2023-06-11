@@ -1,3 +1,7 @@
+# [0.4.0](https://github.com/citation-js/plugin-isbn/compare/v0.3.2...v0.4.0) (2023-06-11)
+
+
+
 ## [0.3.2](https://github.com/citation-js/plugin-isbn/compare/v0.3.1...v0.3.2) (2023-06-11)
 
 
