@@ -14,5 +14,15 @@ describe('isbn', function () {
         assert.deepStrictEqual(await plugins.input.chainAsync(input, { generateGraph: false }), output)
       })
     }
+
+    describe('errors', function () {
+      it('for non-existent ISBN', function () {
+        // Unforunately, both 1-234-56789-X and 0-00-000000-0 are in use according to Google Books
+        assert.throws(
+          () => plugins.input.chain('abc', { generateGraph: false, forceType: '@isbn/isbn-13' })),
+          { message: 'Cannot find resource for ISBN: abc' }
+        )
+      })
+    })
   })
 })
