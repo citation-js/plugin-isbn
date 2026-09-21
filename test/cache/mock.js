@@ -1,6 +1,9 @@
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import { mock } from 'node:test'
 import * as original from '@citation-js/core'
-import cache from './cache.json' with { type: 'json' }
+
+const cache = JSON.parse(await fs.readFile(path.join(import.meta.dirname, 'cache.json'), 'utf8'))
 
 export default mock.module('@citation-js/core', {
   namedExports: {

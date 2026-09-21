@@ -31,7 +31,7 @@ async function main () {
   mock.restore()
 
   await fs.writeFile(
-    path.join(__dirname, 'cache.json'),
+    path.join(path.join(import.meta.dirname, 'cache.json'), 'cache.json'),
     JSON.stringify(cache)
   )
 }
