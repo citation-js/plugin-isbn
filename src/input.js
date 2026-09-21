@@ -7,10 +7,14 @@ function getUrls (isbn) {
   isbn = isbn.replace(/-/g, '')
 
   return [
-    [`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
-      json => json.totalItems],
-    [`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
-      json => Object.keys(json).length]
+    // [
+    //   `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
+    //   json => json.totalItems
+    // ],
+    [
+      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
+      json => Object.keys(json).length
+    ]
   ]
 }
 
