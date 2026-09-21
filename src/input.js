@@ -15,31 +15,43 @@ function getUrls (isbn) {
 }
 
 function getResponse (isbn) {
+  const errors = []
+
   for (const [url, check] of getUrls(isbn)) {
-    const response = util.fetchFile(url)
-    if (response) {
-      const json = JSON.parse(response)
-      if (check(json)) {
-        return json
+    try {
+      const response = util.fetchFile(url)
+      if (response) {
+        const json = JSON.parse(response)
+        if (check(json)) {
+          return json
+        }
       }
+    } catch (error) {
+      errors.push(error)
     }
   }
 
-  throw new Error(`Cannot find resource for ISBN: ${isbn}`)
+  throw new Error(`Cannot find resource for ISBN: ${isbn}`, { cause: errors.pop() })
 }
 
 async function getResponseAsync (isbn) {
+  const errors = []
+
   for (const [url, check] of getUrls(isbn)) {
-    const response = await util.fetchFileAsync(url)
-    if (response) {
-      const json = JSON.parse(response)
-      if (check(json)) {
-        return json
+    try {
+      const response = await util.fetchFileAsync(url)
+      if (response) {
+        const json = JSON.parse(response)
+        if (check(json)) {
+          return json
+        }
       }
+    } catch (error) {
+      errors.push(error)
     }
   }
 
-  throw new Error(`Cannot find resource for ISBN: ${isbn}`)
+  throw new Error(`Cannot find resource for ISBN: ${isbn}`, { cause: errors.pop() })
 }
 
 export const ref = '@isbn'
