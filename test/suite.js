@@ -1,11 +1,11 @@
-/* eslint-env mocha */
+import assert from 'node:assert'
+import { describe, it } from 'node:test';
 
-import './cache/mock'
-import '../src/'
+import './cache/mock.js'
+import apiTests from './suite.data.js'
 
-import assert from 'assert'
-import { plugins } from '@citation-js/core'
-import apiTests from './suite.data'
+const { plugins } = await import('@citation-js/core')
+await import('../src/index.js')
 
 describe('isbn', function () {
   describe('api', function () {
@@ -16,10 +16,10 @@ describe('isbn', function () {
     }
 
     describe('errors', function () {
-      it('for non-existent ISBN', function () {
+      it('for non-existent ISBN', async function () {
         // Unforunately, both 1-234-56789-X and 0-00-000000-0 are in use according to Google Books
-        assert.throws(
-          () => plugins.input.chain('abc', { generateGraph: false, forceType: '@isbn/isbn-13' })),
+        await assert.rejects(
+          () => plugins.input.chainAsync('abc', { generateGraph: false, forceType: '@isbn/isbn-13' }),
           { message: 'Cannot find resource for ISBN: abc' }
         )
       })

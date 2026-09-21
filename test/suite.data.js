@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     name: 'book',
     input: '9780099560432',

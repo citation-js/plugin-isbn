@@ -1,15 +1,19 @@
-const cache = require('./cache')
+import { mock } from 'node:test'
+import * as original from '@citation-js/core'
+import cache from './cache.json' with { type: 'json' }
 
-const modulePath = require.resolve('@citation-js/core/lib/util/fetchFile.js')
-require(modulePath)
-
-const mockModule = require.cache[modulePath]
-const old = mockModule.exports.fetchFileAsync
-
-mockModule.exports.fetchFileAsync = function ours (url, ...args) {
-  if (url in cache) {
-    return cache[url]
-  } else {
-    return old.call(this, url, ...args)
+export default mock.module('@citation-js/core', {
+  namedExports: {
+    ...original,
+    util: {
+      ...original.util,
+      fetchFileAsync: function ours (url, ...args) {
+        if (url in cache) {
+          return cache[url]
+        } else {
+          return '' // original.util.fetchFileAsync.call(this, url, ...args)
+        }
+      }
+    }
   }
-}
+})
