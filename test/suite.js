@@ -22,7 +22,6 @@ global.fetch = async function (url, init) {
   return _fetch(url, init)
 }
 
-
 describe('isbn', function () {
   describe('api', function () {
     for (const { name, input, output } of apiTests) {
