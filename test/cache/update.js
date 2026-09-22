@@ -1,34 +1,38 @@
-import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import { mock } from 'node:test'
-import * as original from '@citation-js/core'
+import { promises as fs } from 'node:fs'
+import { setGlobalDispatcher, Agent } from 'undici'
+
+import { Cite } from '@citation-js/core'
+import '../../src/index.js'
 
 import tests from '../suite.data.js'
 
-export default mock.module('@citation-js/core', {
-  namedExports: {
-    ...original,
-    util: {
-      ...original.util,
-      fetchFileAsync: async function ours (url, ...args) {
-        return original.util.fetchFileAsync.call(this, url, ...args)
-          .then(response => (cache[url] = response))
-      }
-    }
-  }
-})
-
-const { Cite } = await import('@citation-js/core')
-await import('../../src/index.js')
-
 const cache = {}
+
+function interceptor (dispatch) {
+  return (options, handler) => {
+    const url = (options.origin ?? '') + options.path
+    const data = []
+
+    console.log(url)
+    return dispatch(options, {
+      ...handler,
+      onResponseData (_controller, chunk) {
+        data.push(chunk)
+      },
+      onResponseEnd (_controller, _trailers) {
+        cache[url] = Buffer.concat(data).toString('utf8')
+      }
+    })
+  }
+}
+
+setGlobalDispatcher(new Agent().compose(interceptor))
 
 async function main () {
   for (const test of tests) {
     console.log((await Cite.async(test.input)).data[0].id)
   }
-
-  mock.restore()
 
   await fs.writeFile(
     path.join(path.join(import.meta.dirname, 'cache.json'), 'cache.json'),

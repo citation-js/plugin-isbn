@@ -1,32 +1,30 @@
 import assert from 'node:assert'
-import path from 'node:path'
 import { promises as fs } from 'node:fs'
-import { describe, it, mock } from 'node:test'
+import path from 'node:path'
+import { describe, it } from 'node:test'
+import { setGlobalDispatcher, MockAgent } from 'undici'
 
-import * as original from '@citation-js/core'
+import { plugins } from '@citation-js/core'
+import '../src/index.js'
+
 import apiTests from './suite.data.js'
 
 const cache = JSON.parse(await fs.readFile(path.join(import.meta.dirname, 'cache', 'cache.json'), 'utf8'))
 
-export default mock.module('@citation-js/core', {
-  namedExports: {
-    ...original,
-    util: {
-      ...original.util,
-      fetchFileAsync: function ours (url, ...args) {
-        if (url in cache) {
-          return cache[url]
-        } else {
-          // return original.util.fetchFileAsync.call(this, url, ...args)
-          return ''
-        }
-      }
-    }
-  }
-})
+const mockAgent = new MockAgent()
+const pools = {}
 
-const { plugins } = await import('@citation-js/core')
-await import('../src/index.js')
+for (const url in cache) {
+  const { origin, pathname: path } = new URL(url)
+
+  if (!pools[origin]) {
+    pools[origin] = mockAgent.get(origin)
+  }
+
+  pools[origin].intercept({ path }).reply(200, cache[url])
+}
+
+setGlobalDispatcher(mockAgent)
 
 describe('isbn', function () {
   describe('api', function () {
