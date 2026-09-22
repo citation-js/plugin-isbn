@@ -67,7 +67,7 @@ export const formats = {
     parseType: {
       dataType: 'String',
       predicate (id) {
-        return /^\d{10}$/.test(id.replace(/-/g, ''))
+        return /^\d{9}[0-9xX]$/.test(id.replace(/-/g, ''))
       }
     }
   },
