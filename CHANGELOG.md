@@ -1,3 +1,16 @@
+# [0.5.0](https://github.com/citation-js/plugin-isbn/compare/v0.4.0...v0.5.0) (2026-09-22)
+
+### Bug Fixes
+
+* disable Google Books API ([84577e2](https://github.com/citation-js/plugin-isbn/commit/84577e296f62cd6829505e4f662c1fd9522267de))
+* fix recognition of ISBN-10 with check digit 'X' ([d2ecfef](https://github.com/citation-js/plugin-isbn/commit/d2ecfef10692b1a6bd1854614fed3e6fff5b2a18))
+* improve error handling ([a2edd64](https://github.com/citation-js/plugin-isbn/commit/a2edd64be126ae9e0652fa6ec066df9898f27468))
+* switch to new OpenLibrary API ([b3136c0](https://github.com/citation-js/plugin-isbn/commit/b3136c07cb23ca2ef5eadb67454bd529745998ed)), closes [#20](https://github.com/citation-js/plugin-isbn/issues/20)
+
+### Features
+
+* add config to select the API ([f9fc5a9](https://github.com/citation-js/plugin-isbn/commit/f9fc5a93a204bb80969471f49a9d5a8cf5db23c9)), closes [#22](https://github.com/citation-js/plugin-isbn/issues/22)
+
 # [0.4.0](https://github.com/citation-js/plugin-isbn/compare/v0.3.2...v0.4.0) (2023-06-11)
 
 * chore!: chore!: drop support for Node.js v10, v12 ([7a8523f](https://github.com/citation-js/plugin-isbn/commit/7a8523fd887334b5013163a844eef6a488c005df))
