@@ -12,8 +12,8 @@ function getUrls (isbn) {
     //   json => json.totalItems
     // ],
     [
-      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
-      json => Object.keys(json).length
+      `https://openlibrary.org/isbn/${isbn}.json`,
+      () => true
     ]
   ]
 }
@@ -133,12 +133,14 @@ export const formats = {
     outputs: '@csl/object'
   },
 
-  '@isbn/vnd.archive.openlibrary.books+object': {
+  '@isbn/vnd.archive.openlibrary.book+object': {
     parse: ol.parse,
+    parseAsync: ol.parseAsync,
     parseType: {
       dataType: 'SimpleObject',
-      predicate (response) {
-        return Object.keys(response).every(key => key.slice(0, 5) === 'ISBN:')
+      propertyConstraint: {
+        props: 'key',
+        value: key => key.startsWith('/books/OL')
       }
     },
     outputs: '@csl/list+object'

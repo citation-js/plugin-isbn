@@ -5,9 +5,35 @@ import * as date from '@citation-js/date'
 // Open Library Books API
 // https://openlibrary.org/dev/docs/api/books
 
-const CONVERT_ARRAY_OF_OBJECTS = {
-  toTarget: ([{ name }]) => name,
-  toSource: name => ([{ name }])
+const PREFIX = 'https://openlibrary.org'
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+const DATE_REGEX = new RegExp(`^(${MONTHS.join('|')}) (\\d+), (\\d+)$`)
+
+function parseDate (string) {
+  const match = string.match(DATE_REGEX)
+
+  if (match) {
+    const [month, day, year] = match.slice(1)
+    return {
+      'date-parts': [[+year, MONTHS.indexOf(month) + 1, +day]]
+    }
+  }
+
+  return date.parse(string)
 }
 
 const OL_PROPS = [
@@ -18,82 +44,138 @@ const OL_PROPS = [
     target: 'author',
     convert: {
       toTarget (authors) {
-        return authors.map(({ name: author, url }) => {
+        return authors.map(({ name: author, key }) => {
           author = name.parse(author)
-          author._url = url
+          author._url = `${PREFIX}${key}`
           return author
         })
-      },
-      toSource: authors => authors.map((author) => ({ name: name.format(author) }))
+      }
     }
   },
   {
     source: 'identifiers',
-    target: ['ISBN', 'ISSN', 'DOI', 'PMID', 'PMCID'],
+    target: 'QID',
     convert: {
-      toTarget: identifiers => identifiers.isbn_13 || identifiers.isbn_10,
-      toSource (...identifiers) {
-        const ids = [
-          identifiers[0] && `isbn_${identifiers[0].length}`,
-          'issn',
-          'doi',
-          'pmid',
-          'pmcid'
-        ]
-        return identifiers.reduce((acc, id, i) => {
-          if (id) { acc[ids[i]] = id }
-          return acc
-        }, {})
-      }
+      toTarget (identifiers) { return identifiers.wikidata?.[0] }
+    }
+  },
+  {
+    source: ['isbn_13', 'isbn_10'],
+    target: 'ISBN',
+    convert: {
+      toTarget (isbn13 = [], isbn10 = []) { return isbn13[0] ?? isbn10[0] }
+    }
+  },
+  {
+    source: 'languages',
+    target: 'language',
+    convert: {
+      toTarget (languages) { return languages[0].identifiers.iso_639_1[0] }
     }
   },
   { source: 'number_of_pages', target: 'number-of-pages' },
   {
     source: 'publishers',
     target: 'publisher',
-    convert: CONVERT_ARRAY_OF_OBJECTS
+    convert: {
+      toTarget (publishers) { return publishers[0] }
+    }
   },
   {
     source: 'publish_date',
     target: 'issued',
-    convert: { toTarget: date.parse, toSource: date.format }
+    convert: { toTarget: parseDate }
   },
   {
     source: 'publish_places',
     target: 'publisher-place',
-    convert: CONVERT_ARRAY_OF_OBJECTS
+    convert: {
+      toTarget (places) { return places[0] }
+    }
   },
   {
     source: ['subjects', 'subject_places', 'subject_people', 'subject_times'],
     target: 'keyword',
     convert: {
-      toTarget: (...subjects) => [].concat(...subjects).filter(Boolean).map(({ name }) => name).join(),
-      toSource: keywords => [keywords.split(',').map(name => ({
-        name,
-        url: 'https://openlibrary.org/subjects/' + name.toLowerCase().replace(/\W+/g, '_')
-      }))]
+      toTarget (...subjects) { return [].concat(...subjects).filter(Boolean).join() }
     }
   },
   'title',
-  { source: 'url', target: 'URL' }
+  {
+    source: 'key',
+    target: 'URL',
+    convert: {
+      toTarget (path) { return `${PREFIX}${path}` }
+    }
+  },
+  {
+    source: 'key',
+    target: 'id',
+    convert: {
+      toTarget (key) { return key.split('/').pop() }
+    }
+  }
 ]
 
 const translator = new util.Translator(OL_PROPS)
 
-export function parse (response) {
-  return Object.keys(response).map((id) => {
-    return translator.convertToTarget(response[id])
-  })
+function convert (responses) {
+  const results = []
+
+  for (const url in responses) {
+    if (!url.startsWith('/books/')) {
+      continue
+    }
+
+    const result = { ...responses[url] }
+
+    for (const field of ['authors', 'languages']) {
+      if (Array.isArray(result[field])) {
+        const keys = result[field]
+
+        result[field] = []
+        for (const { key } of keys) {
+          result[field].push(responses[key])
+        }
+      }
+    }
+
+    results.push(translator.convertToTarget(result))
+  }
+
+  return results
 }
 
-export function format (records) {
-  const output = {}
+function collectUrls (response) {
+  const urls = []
 
-  for (const record of records) {
-    if (!record.ISBN) {
-      output[`ISBN:${record.ISBN}`] = translator.convertToSource(record)
+  for (const field of ['authors', 'languages']) {
+    if (Array.isArray(response[field])) {
+      for (let i = 0; i < response[field].length; i++) {
+        urls.push(response[field][i].key)
+      }
     }
   }
 
-  return output
+  return urls
+}
+
+export function parse (response) {
+  const responses = { [response.key]: response }
+  for (const url of collectUrls(response)) {
+    responses[url] = util.fetchFile(`${PREFIX}${url}.json`)
+  }
+  return convert(responses)
+}
+
+export async function parseAsync (response) {
+  const responses = { [response.key]: response }
+  const requests = await Promise.all(collectUrls(response).map(async url => {
+    const response = await util.fetchFileAsync(`${PREFIX}${url}.json`)
+    return [url, JSON.parse(response)]
+  }))
+  for (const [url, response] of requests) {
+    responses[url] = response
+  }
+  return convert(responses)
 }
