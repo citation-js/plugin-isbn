@@ -1,21 +1,25 @@
 import { util } from '@citation-js/core'
 
+import config from './config.js'
 import * as google from './google-books.js'
 import * as ol from './open-library.js'
+
+const apiDefinitions = {
+  googlebooks: {
+    url: isbn => `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
+    checkResponse: json => json.totalItems
+  },
+
+  openlibrary: {
+    url: isbn => `https://openlibrary.org/isbn/${isbn}.json`,
+    checkResponse: () => true
+  }
+}
 
 function getUrls (isbn) {
   isbn = isbn.replace(/-/g, '')
 
-  return [
-    // [
-    //   `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`,
-    //   json => json.totalItems
-    // ],
-    [
-      `https://openlibrary.org/isbn/${isbn}.json`,
-      () => true
-    ]
-  ]
+  return config.api.map(api => [apiDefinitions[api].url(isbn), apiDefinitions[api].checkResponse])
 }
 
 function getResponse (isbn) {
