@@ -36,10 +36,9 @@ describe('isbn', function () {
 
     describe('errors', function () {
       it('for non-existent ISBN', async function () {
-        // Unforunately, both 1-234-56789-X and 0-00-000000-0 are in use according to Google Books
         await assert.rejects(
-          () => plugins.input.chainAsync('abc', { generateGraph: false, forceType: '@isbn/isbn-13' }),
-          { message: 'Cannot find resource for ISBN: abc' }
+          () => plugins.input.chainAsync('1-234-56789-X', { generateGraph: false }),
+          { message: 'Cannot find resource for ISBN: 1-234-56789-X' }
         )
       })
     })

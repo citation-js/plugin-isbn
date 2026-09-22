@@ -3,37 +3,37 @@ export default [
     name: 'book',
     input: '9780099560432',
     output: [{
-      URL: 'https://books.google.com/books/about/Ready_Player_One.html?hl=&id=4zugGMReN3cC',
-      abstract: 'It\'s the year 2044, and the real world has become an ugly place. We\'re out of oil. We\'ve wrecked the climate. Famine, poverty, and disease are widespread.',
+      URL: 'https://openlibrary.org/books/OL27257671M',
       author: [
-        { family: 'Cline', given: 'Ernest' }
+        { family: 'Cline', given: 'Ernest', _url: 'https://openlibrary.org/authors/OL6941868A' }
       ],
-      issued: { 'date-parts': [[2012]] },
-      keyword: 'Fiction',
+      id: 'OL27257671M',
+      issued: { 'date-parts': [[2012, 4, 5]] },
       language: 'en',
-      'number-of-pages': 388,
-      publisher: 'Random House',
+      'number-of-pages': 372,
+      publisher: 'Arrow Books',
       title: 'Ready Player One',
       type: 'book',
-      ISBN: '9780099560432'
+      ISBN: '9780099560432',
+      QID: 'Q116176475'
     }]
   },
   {
     name: 'as number',
     input: 9780008117498,
     output: [{
-      URL: 'https://books.google.com/books/about/Foundation.html?hl=&id=PKV6swEACAAJ',
-      abstract: "WINNER OF THE HUGO AWARD FOR BEST ALL-TIME SERIES The Foundation series is Isaac Asimov's iconic masterpiece. Unfolding against the backdrop of a crumbling Galactic Empire, the story of Hari Seldon's two Foundations is a lasting testament to an extraordinary imagination, one that shaped science fiction as we know it today. The Galactic Empire has prospered for twelve thousand years. Nobody suspects that the heart of the thriving Empire is rotten, until psychohistorian Hari Seldon uses his new science to foresee its terrible fate. Exiled to the desolate planet Terminus, Seldon establishes a colony of the greatest minds in the Empire, a Foundation which holds the key to changing the fate of the galaxy. However, the death throes of the Empire breed hostile new enemies, and the young Foundation's fate will be threatened first.",
+      URL: 'https://openlibrary.org/books/OL26774598M',
       author: [{
+        _url: 'https://openlibrary.org/authors/OL34221A',
         family: 'Asimov',
         given: 'Isaac'
       }],
+      id: 'OL26774598M',
       issued: {
-        'date-parts': [[2016, 9, 19]]
+        'date-parts': [[2016]]
       },
-      keyword: 'Fiction',
       language: 'en',
-      publisher: 'Voyager',
+      publisher: 'Harper Voyager',
       title: 'Foundation',
       type: 'book',
       ISBN: '9780008117498'
@@ -45,13 +45,18 @@ export default [
     output: [{
       type: 'book',
       author: [{
+        _url: 'https://openlibrary.org/authors/OL392086A',
         given: 'Muriel',
         family: 'Rukeyser'
       }],
-      URL: 'https://books.google.com/books/about/Willard_Gibbs.html?hl=&id=Bq9jQgAACAAJ',
-      keyword: 'Mathematicians',
-      ISBN: '9780918024565',
+      URL: 'https://openlibrary.org/books/OL2383595M',
+      ISBN: '0918024579',
+      id: 'OL2383595M',
+      keyword: 'Gibbs, J. Willard 1839-1903.,Physicists -- United States -- Biography.,Mathematicians -- United States -- Biography.',
       language: 'en',
+      'number-of-pages': 465,
+      publisher: 'Ox Bow Press',
+      'publisher-place': 'Woodbridge, Conn',
       title: 'Willard Gibbs',
       issued: { 'date-parts': [[1988]] }
     }]
