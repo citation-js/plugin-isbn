@@ -1,43 +1,28 @@
 import path from 'node:path'
 import { promises as fs } from 'node:fs'
-import { setGlobalDispatcher, Agent } from 'undici'
 
 import { Cite } from '@citation-js/core'
 import '../../src/index.js'
 
 import tests from '../suite.data.js'
 
-const cache = {}
+const cachePath = path.join(import.meta.dirname, 'cache.json')
+const cache = JSON.parse(await fs.readFile(cachePath, 'utf8'))
 
-function interceptor (dispatch) {
-  return (options, handler) => {
-    const url = (options.origin ?? '') + options.path
-    const data = []
+const _fetch = global.fetch
+global.fetch = async function (url, init) {
+  const key = url.url ?? url
+  console.error('Fetching:', key)
 
-    console.log(url)
-    return dispatch(options, {
-      ...handler,
-      onResponseData (_controller, chunk) {
-        data.push(chunk)
-      },
-      onResponseEnd (_controller, _trailers) {
-        cache[url] = Buffer.concat(data).toString('utf8')
-      }
-    })
-  }
+  const response = await _fetch(url, init)
+  cache[key] = await response.clone().text()
+  return response
 }
 
-setGlobalDispatcher(new Agent().compose(interceptor))
-
-async function main () {
-  for (const test of tests) {
-    console.log((await Cite.async(test.input)).data[0].id)
-  }
-
-  await fs.writeFile(
-    path.join(path.join(import.meta.dirname, 'cache.json'), 'cache.json'),
-    JSON.stringify(cache)
-  )
+for (const test of tests) {
+  console.error('===', test.input, '===')
+  const result = await Cite.async(test.input)
+  console.error(result.data[0].id)
 }
 
-main().catch(console.error)
+await fs.writeFile(cachePath, JSON.stringify(cache, null, 2))

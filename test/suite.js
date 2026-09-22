@@ -2,7 +2,6 @@ import assert from 'node:assert'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { describe, it } from 'node:test'
-import { setGlobalDispatcher, MockAgent } from 'undici'
 
 import { plugins } from '@citation-js/core'
 import '../src/index.js'
@@ -11,20 +10,18 @@ import apiTests from './suite.data.js'
 
 const cache = JSON.parse(await fs.readFile(path.join(import.meta.dirname, 'cache', 'cache.json'), 'utf8'))
 
-const mockAgent = new MockAgent()
-const pools = {}
-
-for (const url in cache) {
-  const { origin, pathname: path } = new URL(url)
-
-  if (!pools[origin]) {
-    pools[origin] = mockAgent.get(origin)
+const _fetch = global.fetch
+global.fetch = async function (url, init) {
+  if (cache[url]) {
+    return Response.json(JSON.parse(cache[url]))
+  } else if (url.contains('1-234-56789-X')) {
+    return Response.error()
   }
 
-  pools[origin].intercept({ path }).reply(200, cache[url])
+  console.error('Cache miss', url, init)
+  return _fetch(url, init)
 }
 
-setGlobalDispatcher(mockAgent)
 
 describe('isbn', function () {
   describe('api', function () {
