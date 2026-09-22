@@ -1,3 +1,12 @@
+# @citation-js/plugin-isbn
+
+Thie plugin adds support for ISBN numbers through a variety of APIs.
+
+[![NPM version](https://img.shields.io/npm/v/@citation-js/plugin-isbn.svg)](https://npmjs.org/package/@citation-js/plugin-isbn)
+[![Codecov](https://img.shields.io/codecov/c/gh/citation-js/plugin-isbn)](https://app.codecov.io/gh/citation-js/plugin-isbn)
+[![NPM total downloads](https://img.shields.io/npm/dt/@citation-js/plugin-isbn.svg)](https://npmcharts.com/compare/@citation-js%2Fplugin-isbn?minimal=true)
+![License](https://img.shields.io/npm/l/@citation-js/plugin-isbn.svg)
+
 ## Install
 
 ```js
@@ -6,11 +15,15 @@ npm install @citation-js/plugin-isbn
 
 ### Browser
 
-Make a build with `@citation-js/plugin-isbn` on the [build tool](https://juniper-coat.glitch.me)!
+Make a build with `@citation-js/plugin-isbn` on the [build tool](https://github.com/citation-js/bundle-tool)!
 
 ## Use
 
-Install the plugin by `require`-ing it:
+```js
+import '@citation-js/plugin-isbn'
+```
+
+Or install the plugin by `require`-ing it:
 
 ```js
 require('@citation-js/plugin-isbn')
@@ -69,7 +82,7 @@ metadata. This benefits no one.
 
 Configure which APIs are called and in what order.
 
-```
+```js
 import { plugins } from '@citation-js/core'
 
 const config = plugins.config.get('@isbn)
